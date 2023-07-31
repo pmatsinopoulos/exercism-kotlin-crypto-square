@@ -1,17 +1,15 @@
+import kotlin.math.ceil
+import kotlin.math.sqrt
+
 private fun normalize(originalText: String): String {
     val regex = Regex("\\s|\\W")
     return originalText.replace(regex, "").lowercase()
 }
 
 private fun calculateColumnsAndRows(length: Int): List<Int> {
-    var c = 1
-    var r = length / c
-    while (c - r > 1 || c < r) {
-        c++
-        r = length / c
-        if (length % c >= 1) r++
-    }
-    return listOf(c, r)
+    val columns = ceil(sqrt(length.toDouble())).toInt()
+    val rows = ceil(length.toDouble() / columns).toInt()
+    return listOf(columns, rows)
 }
 
 private fun breakTextByColumns(text: String, columns: Int): List<String> {
