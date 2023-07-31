@@ -6,15 +6,9 @@ private fun normalize(originalText: String): String {
     return originalText.replace(regex, "").lowercase()
 }
 
-private fun calculateColumnsAndRows(length: Int): List<Int> {
-    val columns = ceil(sqrt(length.toDouble())).toInt()
-    val rows = ceil(length.toDouble() / columns).toInt()
-    return listOf(columns, rows)
-}
+private fun calculateColumns(length: Int) = ceil(sqrt(length.toDouble())).toInt()
 
-private fun breakTextByColumns(text: String, columns: Int): List<String> {
-    return text.chunked(columns) { c -> c.padEnd(columns).toString() }
-}
+private fun breakTextByColumns(text: String, columns: Int) = text.chunked(columns) { c -> c.padEnd(columns).toString() }
 
 private fun buildEncodedText(input: List<String>): String {
     var result = ""
@@ -35,9 +29,9 @@ object CryptoSquare {
         var result = normalize(plaintext)
         val length = result.length
 
-        val columnsAndRows = calculateColumnsAndRows(length)
+        val columns = calculateColumns(length)
 
-        val textByColumns: List<String> = breakTextByColumns(result, columnsAndRows[0])
+        val textByColumns: List<String> = breakTextByColumns(result, columns)
         result = buildEncodedText(textByColumns)
 
         return result
